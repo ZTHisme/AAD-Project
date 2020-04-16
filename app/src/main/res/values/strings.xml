@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Eventrra</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_wishlist">Wishlist</string>
+    <string name="title_purchase">Purchase</string>
+    <string name="tab_title_all">All</string>
+    <string name="tab_title_for_you">For You</string>
+    <string name="tab_title_this_weekend">This Weekend</string>
+</resources>
