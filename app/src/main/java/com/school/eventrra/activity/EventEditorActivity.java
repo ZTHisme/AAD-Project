@@ -39,6 +39,8 @@ public class EventEditorActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        findViewById(R.id.editor).setVisibility(View.VISIBLE);
+
         imageView = findViewById(R.id.img_view);
 
         spnLocation = findViewById(R.id.spn_location);

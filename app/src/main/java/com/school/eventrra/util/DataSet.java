@@ -9,15 +9,19 @@ import java.util.List;
 import java.util.Locale;
 
 public class DataSet {
+    public static Event selectedEvent;
 
     public static List<Event> getDummyEvents() {
         List<Event> events = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             Event event = new Event();
-            event.setDate(new Date().getTime());
+            event.setFromDate(new Date().getTime());
+            event.setToDate(new Date().getTime());
             event.setTitle("Title " + i);
             event.setLocation("Location " + i);
+            event.setAbout("About " + i);
+            event.setPrice("Price " + i);
             events.add(event);
         }
 

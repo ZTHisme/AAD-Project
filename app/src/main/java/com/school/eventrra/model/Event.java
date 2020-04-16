@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
     private String id;
-    private long date;
+    private long fromDate;
+    private long toDate;
     private String title;
     private String imageBase64;
     private String location;
@@ -19,12 +20,20 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-    public long getDate() {
-        return date;
+    public long getFromDate() {
+        return fromDate;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setFromDate(long fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public long getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(long toDate) {
+        this.toDate = toDate;
     }
 
     public String getTitle() {
