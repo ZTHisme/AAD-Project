@@ -1,5 +1,6 @@
 package com.school.eventrra.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.school.eventrra.R;
+import com.school.eventrra.activity.EventEditorActivity;
 import com.school.eventrra.adapter.SectionsPagerAdapter;
 
 public class HomeFragment extends Fragment {
@@ -28,6 +30,18 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = root.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        root.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewEvent();
+            }
+        });
+
         return root;
+    }
+
+    private void addNewEvent() {
+        startActivity(new Intent(getContext(), EventEditorActivity.class));
     }
 }

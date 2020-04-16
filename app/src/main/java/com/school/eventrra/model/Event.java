@@ -8,6 +8,8 @@ public class Event implements Serializable {
     private String title;
     private String imageBase64;
     private String location;
+    private String about;
+    private String price;
 
     public String getId() {
         return id;
@@ -47,5 +49,21 @@ public class Event implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

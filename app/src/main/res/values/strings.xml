@@ -14,4 +14,12 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="event_editor">Event Editor</string>
+    <string name="date_and_time">Date &amp; Time</string>
+    <string name="enter_here">Enter here</string>
+    <string name="about">About</string>
+    <string name="event_title">Event Title</string>
+    <string name="price">Price</string>
+    <string name="location">Location</string>
+    <string name="not_set">Not Set</string>
 </resources>
