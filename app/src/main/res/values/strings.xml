@@ -7,4 +7,11 @@
     <string name="tab_title_all">All</string>
     <string name="tab_title_for_you">For You</string>
     <string name="tab_title_this_weekend">This Weekend</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or">or</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
