@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.EventEditorActivity"
-            android:label="@string/event_editor"
             android:parentActivityName=".activity.BottomNavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.SignInActivity">
