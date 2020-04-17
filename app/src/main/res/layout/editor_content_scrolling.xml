@@ -47,15 +47,35 @@
                 app:layout_constraintStart_toEndOf="@+id/img"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_datetime"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            <Button
+                android:id="@+id/btn_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/not_set"
+                android:text="@string/date_not_set"
+                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <Button
+                android:id="@+id/btn_from"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/from_not_set"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toStartOf="@+id/btn_to"
+                app:layout_constraintStart_toStartOf="@+id/tv_title"
+                app:layout_constraintTop_toBottomOf="@+id/btn_date" />
+
+            <Button
+                android:id="@+id/btn_to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/to_not_set"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_from"
+                app:layout_constraintTop_toBottomOf="@+id/btn_date" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

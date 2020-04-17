@@ -23,4 +23,7 @@
     <string name="location">Location</string>
     <string name="not_set">Not Set</string>
     <string name="save">Save</string>
+    <string name="from_not_set">From(Not Set)</string>
+    <string name="to_not_set">To(Not Set)</string>
+    <string name="date_not_set">Date(Not Set)</string>
 </resources>

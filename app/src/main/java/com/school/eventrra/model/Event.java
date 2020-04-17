@@ -1,11 +1,13 @@
 package com.school.eventrra.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Event implements Serializable {
     private String id;
-    private long fromDate;
-    private long toDate;
+    private Date date;
+    private Date fromDate;
+    private Date toDate;
     private String title;
     private String imageBase64;
     private String location;
@@ -20,19 +22,27 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-    public long getFromDate() {
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(long fromDate) {
+    public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
     }
 
-    public long getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
-    public void setToDate(long toDate) {
+    public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
 

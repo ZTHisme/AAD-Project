@@ -16,8 +16,9 @@ public class DataSet {
 
         for (int i = 0; i < 100; i++) {
             Event event = new Event();
-            event.setFromDate(new Date().getTime());
-            event.setToDate(new Date().getTime());
+            event.setDate(new Date());
+            event.setFromDate(new Date());
+            event.setToDate(new Date());
             event.setTitle("Title " + i);
             event.setLocation("Location " + i);
             event.setAbout("About " + i);
