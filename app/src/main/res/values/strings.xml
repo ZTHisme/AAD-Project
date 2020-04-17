@@ -27,4 +27,6 @@
     <string name="to_not_set">To(Not Set)</string>
     <string name="date_not_set">Date(Not Set)</string>
     <string name="register">Register</string>
+    <string name="number_of_ticket">Number of ticket</string>
+    <string name="note">* Note: Please arrive 1 hour before the event start. If it does not come, it will be canceled.</string>
 </resources>

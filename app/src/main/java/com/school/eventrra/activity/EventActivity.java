@@ -3,6 +3,7 @@ package com.school.eventrra.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,8 +15,6 @@ import com.school.eventrra.R;
 import com.school.eventrra.util.BitmapUtil;
 import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DateUtil;
-
-import java.util.Date;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -57,6 +56,6 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        // TODO: 4/17/2020 call api
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

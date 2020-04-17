@@ -42,8 +42,13 @@ public class EventEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_editor);
+
+        if (DataSet.selectedEvent == null) {
+            DataSet.selectedEvent = new Event();
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle(DataSet.selectedEvent.getTitle());
         setSupportActionBar(toolbar);
 
         findViewById(R.id.editor).setVisibility(View.VISIBLE);
@@ -51,10 +56,6 @@ public class EventEditorActivity extends AppCompatActivity {
         initUI();
 
         initListener();
-
-        if (DataSet.selectedEvent == null) {
-            DataSet.selectedEvent = new Event();
-        }
     }
 
     @Override
@@ -102,6 +103,8 @@ public class EventEditorActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        imageView.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
+
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
