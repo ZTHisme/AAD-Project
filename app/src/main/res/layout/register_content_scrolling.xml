@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/rounded_btn_bg"
-            android:onClick="register"
-            android:text="@string/register"
+            android:onClick="next"
+            android:text="@string/next"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

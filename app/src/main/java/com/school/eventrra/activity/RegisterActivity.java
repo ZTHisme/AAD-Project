@@ -3,6 +3,7 @@ package com.school.eventrra.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void register(View v) {
-
+    public void next(View v) {
+        startActivity(new Intent(this, BookingActivity.class));
     }
 }

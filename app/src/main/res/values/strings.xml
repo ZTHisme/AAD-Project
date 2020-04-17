@@ -29,4 +29,7 @@
     <string name="register">Register</string>
     <string name="number_of_ticket">Number of ticket</string>
     <string name="note">* Note: Please arrive 1 hour before the event start. If it does not come, it will be canceled.</string>
+    <string name="next">Next</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
 </resources>
