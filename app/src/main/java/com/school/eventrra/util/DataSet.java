@@ -1,6 +1,7 @@
 package com.school.eventrra.util;
 
 import com.school.eventrra.model.Event;
+import com.school.eventrra.model.Register;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +28,20 @@ public class DataSet {
         }
 
         return events;
+    }
+
+    public static List<Register> getDummyRegisters() {
+        List<Register> registers = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            Register register = new Register();
+            register.setDate(new Date());
+            register.setUsername("Username " + i);
+            register.setEventTitle("Event Title " + i);
+            registers.add(register);
+        }
+
+        return registers;
     }
 
     public static List<String> getCountries() {

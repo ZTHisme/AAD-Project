@@ -21,6 +21,6 @@
         android:id="@+id/navigation_purchase"
         android:name="com.school.eventrra.fragment.PurchaseFragment"
         android:label="@string/title_purchase"
-        tools:layout="@layout/fragment_purchase" />
+        tools:layout="@layout/fragment_main" />
 
 </navigation>
