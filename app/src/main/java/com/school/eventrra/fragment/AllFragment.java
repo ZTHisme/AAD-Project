@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.school.eventrra.R;
@@ -28,6 +29,9 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
         // TODO: 4/16/2020 get data from api and set to adapter
         adapter.setDataSet(DataSet.getDummyEvents());
         rv.setAdapter(adapter);
+        if (getContext() != null) {
+            rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        }
         return root;
     }
 

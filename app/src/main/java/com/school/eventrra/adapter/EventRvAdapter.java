@@ -16,9 +16,9 @@ import com.school.eventrra.R;
 import com.school.eventrra.callback.OnRvItemClickListener;
 import com.school.eventrra.model.Event;
 import com.school.eventrra.util.BitmapUtil;
+import com.school.eventrra.util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHolder>
@@ -52,7 +52,7 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
         holder.img.setImageBitmap(BitmapUtil.base64StringToBitmap(event.getImageBase64()));
         // TODO: 4/16/2020 if include in favorite list, then use fill heart, else border heart icon
         holder.imgFav.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
-        holder.tvDatetime.setText(new Date().toString());
+        holder.tvDatetime.setText(DateUtil.stdDateFormat(event.getDate()));
         holder.tvTitle.setText(event.getTitle());
         holder.tvLocation.setText(event.getLocation());
     }
