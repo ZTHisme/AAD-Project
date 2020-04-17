@@ -15,7 +15,7 @@
         android:id="@+id/navigation_wishlist"
         android:name="com.school.eventrra.fragment.WishListFragment"
         android:label="@string/title_wishlist"
-        tools:layout="@layout/fragment_wishlist" />
+        tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/navigation_purchase"
