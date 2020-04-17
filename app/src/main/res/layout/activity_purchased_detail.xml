@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PurchasedDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:text="@string/invoice_id" />
+
+        <TextView
+            android:id="@+id/tv_invoice_id"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/date" />
+
+        <TextView
+            android:id="@+id/tv_invoice_date"
+            style="@style/InvoiceValueTextTheme"
+            android:layout_marginBottom="16dp" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/event_title" />
+
+        <TextView
+            android:id="@+id/tv_event_title"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/InvoiceValueTextTheme"
+            android:layout_marginBottom="16dp" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/phone" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/email" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/address" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/InvoiceValueTextTheme" />
+
+    </LinearLayout>
+
+</ScrollView>
