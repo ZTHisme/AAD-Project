@@ -158,6 +158,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_btn_bg"
+            android:onClick="register"
+            android:text="@string/register"
+            android:textColor="@android:color/white" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

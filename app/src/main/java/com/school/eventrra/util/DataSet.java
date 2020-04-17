@@ -21,7 +21,7 @@ public class DataSet {
             event.setToDate(new Date());
             event.setTitle("Title " + i);
             event.setLocation("Location " + i);
-            event.setAbout("About " + i);
+            event.setAbout("About About About About About About About About About About About " + i);
             event.setPrice("Price " + i);
             events.add(event);
         }

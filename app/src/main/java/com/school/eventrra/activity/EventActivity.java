@@ -55,4 +55,8 @@ public class EventActivity extends AppCompatActivity {
         }
         ((TextView) findViewById(tvId)).setText(str);
     }
+
+    public void register(View v) {
+        // TODO: 4/17/2020 call api
+    }
 }
