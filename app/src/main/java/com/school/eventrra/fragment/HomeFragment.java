@@ -10,10 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.school.eventrra.R;
 import com.school.eventrra.activity.EventEditorActivity;
 import com.school.eventrra.adapter.SectionsPagerAdapter;
+import com.school.eventrra.util.DataSet;
 
 public class HomeFragment extends Fragment {
 
@@ -31,12 +33,16 @@ public class HomeFragment extends Fragment {
         TabLayout tabs = root.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        root.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewEvent();
-            }
-        });
+        if (DataSet.isAdmin) {
+            FloatingActionButton fab = root.findViewById(R.id.fab);
+            fab.setVisibility(View.VISIBLE);
+            root.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addNewEvent();
+                }
+            });
+        }
 
         return root;
     }

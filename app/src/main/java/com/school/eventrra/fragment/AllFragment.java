@@ -43,7 +43,9 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
 
     @Override
     public void onLongClick(int position, Event event) {
-        // TODO: 4/16/2020 show edit or delete option
-        Toast.makeText(getContext(), "onLongClick: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+        if (DataSet.isAdmin) {
+            // TODO: 4/16/2020 show edit or delete option
+            Toast.makeText(getContext(), "onLongClick: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

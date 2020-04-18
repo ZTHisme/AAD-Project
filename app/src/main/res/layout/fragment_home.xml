@@ -30,6 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_black_24dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
