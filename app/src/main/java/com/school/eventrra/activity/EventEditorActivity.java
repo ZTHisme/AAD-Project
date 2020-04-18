@@ -36,6 +36,7 @@ import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DateUtil;
 import com.school.eventrra.util.ImageChooserUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -132,7 +133,9 @@ public class EventEditorActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                DataSet.selectedEvent.setDate(new Date(year, month, dayOfMonth));
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(year, month, dayOfMonth);
+                                DataSet.selectedEvent.setDate(calendar.getTime());
 
                                 btnDate.setText(DateUtil.stdDateFormat(DataSet.selectedEvent.getDate()));
                             }
@@ -191,14 +194,20 @@ public class EventEditorActivity extends AppCompatActivity {
 
     private void showDatePickerDialog(Date selectedDate,
                                       final DatePickerDialog.OnDateSetListener onDateSetListener) {
-        if (selectedDate == null) {
-            selectedDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        if (selectedDate != null) {
+            calendar.set(Calendar.YEAR, selectedDate.getYear() + 1900);
+            calendar.set(Calendar.MONTH, selectedDate.getMonth());
+            calendar.set(Calendar.DAY_OF_MONTH, selectedDate.getDate());
         }
+
         DatePickerDialog dialog = new DatePickerDialog(this,
                 onDateSetListener,
-                selectedDate.getYear() + 1900,
-                selectedDate.getMonth(),
-                selectedDate.getDate());
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+
         dialog.show();
     }
 
