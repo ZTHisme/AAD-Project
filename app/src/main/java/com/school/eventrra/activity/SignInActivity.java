@@ -32,7 +32,9 @@ public class SignInActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SIGN_UP = 1324;
     private static final int REQUEST_CODE_PERMISSIONS = 34434;
     private static final List<String> permissions = Arrays.asList(
-            Manifest.permission.INTERNET
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
     );
 
     private FirebaseAuth mAuth;
