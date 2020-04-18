@@ -1,14 +1,17 @@
 package com.school.eventrra.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,11 +21,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.school.eventrra.R;
 import com.school.eventrra.model.Event;
 import com.school.eventrra.util.BitmapUtil;
+import com.school.eventrra.util.Constants;
 import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DateUtil;
 import com.school.eventrra.util.ImageChooserUtil;
@@ -33,10 +42,13 @@ import java.util.List;
 public class EventEditorActivity extends AppCompatActivity {
     private List<String> countries;
 
+    private DatabaseReference myRef;
+
     private ImageView imageView;
     private EditText edtTitle, edtAbout, edtPrice;
     private Button btnDate, btnFrom, btnTo;
     private Spinner spnLocation;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +68,9 @@ public class EventEditorActivity extends AppCompatActivity {
         initUI();
 
         initListener();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(Constants.TABLE_EVENT);
     }
 
     @Override
@@ -68,6 +83,7 @@ public class EventEditorActivity extends AppCompatActivity {
                     Bitmap bm = BitmapUtil.resize(ImageChooserUtil.getBitmapFromIntent(
                             this,
                             data));
+                    DataSet.selectedEvent.setImageBase64(BitmapUtil.bitmapToBase64String(bm));
                     imageView.setImageBitmap(bm);
                     break;
                 }
@@ -100,6 +116,10 @@ public class EventEditorActivity extends AppCompatActivity {
         spnLocation = findViewById(R.id.spn_location);
         edtAbout = findViewById(R.id.edt_about);
         edtPrice = findViewById(R.id.edt_price);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Processing...");
+        progressDialog.setCancelable(false);
     }
 
     private void initListener() {
@@ -196,6 +216,77 @@ public class EventEditorActivity extends AppCompatActivity {
     }
 
     private void save() {
-        // TODO: 4/16/2020 call api
+        String title = edtTitle.getText().toString().trim();
+        String location = (String) spnLocation.getSelectedItem();
+        String about = edtAbout.getText().toString().trim();
+        String price = edtPrice.getText().toString().trim();
+
+        if (TextUtils.isEmpty(DataSet.selectedEvent.getImageBase64())) {
+            Toast.makeText(this, "Add photo", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            edtTitle.setError("Enter title");
+            return;
+        }
+
+        if (TextUtils.isEmpty(about)) {
+            edtAbout.setError("Enter about");
+            return;
+        }
+
+        if (TextUtils.isEmpty(price)) {
+            edtPrice.setError("Enter price");
+            return;
+        }
+
+        if (DataSet.selectedEvent.getDate() == null) {
+            Toast.makeText(this, "Set date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (DataSet.selectedEvent.getFromDate() == null) {
+            Toast.makeText(this, "Set start time", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (DataSet.selectedEvent.getToDate() == null) {
+            Toast.makeText(this, "Set end time", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(DataSet.selectedEvent.getId())) {
+            final String id = myRef.push().getKey();
+            if (TextUtils.isEmpty(id)) {
+                showFailToSaveToast();
+                return;
+            }
+            DataSet.selectedEvent.setId(id);
+        }
+        DataSet.selectedEvent.setTitle(title);
+        DataSet.selectedEvent.setLocation(location);
+        DataSet.selectedEvent.setAbout(about);
+        DataSet.selectedEvent.setPrice(price);
+
+        progressDialog.show();
+        myRef.child(DataSet.selectedEvent.getId())
+                .setValue(DataSet.selectedEvent)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            DataSet.selectedEvent = null;
+                            finish();
+                        } else {
+                            showFailToSaveToast();
+                        }
+                    }
+                });
+    }
+
+    private void showFailToSaveToast() {
+        Toast.makeText(this, "Fail to save", Toast.LENGTH_SHORT).show();
     }
 }
