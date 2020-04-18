@@ -17,4 +17,12 @@ public class FirebaseUtil {
 
         return events;
     }
+
+//    public static List<Event> parseEventList(DataSnapshot dataSnapshot) {
+//        return new FirebaseListParser<Event>().parse(dataSnapshot);
+//    }
+
+    public static List<String> parseWishlist(DataSnapshot dataSnapshot) {
+        return new FirebaseListParser<String>().parse(dataSnapshot);
+    }
 }

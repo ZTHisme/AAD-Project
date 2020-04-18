@@ -12,6 +12,7 @@ import java.util.Locale;
 public class DataSet {
     public static Event selectedEvent;
     public static boolean isAdmin;
+    public static List<String> wishlist;
 
     public static List<Event> getDummyEvents() {
         List<Event> events = new ArrayList<>();
@@ -58,5 +59,13 @@ public class DataSet {
         Collections.sort(countries);
 
         return countries;
+    }
+
+    public static boolean isWishlist(String eventId) {
+        if (wishlist == null || wishlist.isEmpty()) {
+            return false;
+        }
+
+        return wishlist.contains(eventId);
     }
 }

@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +48,7 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
             rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         }
 
-        fetchData();
+        fetchWishlistAndEvents();
 
         return root;
     }
@@ -65,10 +67,9 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
         }
     }
 
-    private void fetchData() {
+    private void fetchEvent() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Constants.TABLE_EVENT);
-        progressDialog.show();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,5 +82,33 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
                 progressDialog.dismiss();
             }
         });
+    }
+
+    private void fetchWishlistAndEvents() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            Toast.makeText(getContext(), "Sign in first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(Constants.TABLE_WISHLIST);
+        progressDialog.show();
+        myRef.child(currentUser.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        DataSet.wishlist = FirebaseUtil.parseWishlist(dataSnapshot);
+
+                        fetchEvent();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        progressDialog.dismiss();
+                    }
+                });
     }
 }
