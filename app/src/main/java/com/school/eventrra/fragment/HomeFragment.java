@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void addNewEvent() {
+        DataSet.selectedEvent = null;
         startActivity(new Intent(getContext(), EventEditorActivity.class));
     }
 }
