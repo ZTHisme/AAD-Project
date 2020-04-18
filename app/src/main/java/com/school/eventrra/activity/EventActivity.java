@@ -63,6 +63,7 @@ public class EventActivity extends AppCompatActivity {
         isFavorite = DataSet.isWishlist(DataSet.selectedEvent.getId());
         triggerFavIcon();
 
+        setText(R.id.tv_date, DateUtil.stdDateFormat(DataSet.selectedEvent.getDate()));
         setText(R.id.tv_datetime_value,
                 DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()) + " - " +
                         DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));

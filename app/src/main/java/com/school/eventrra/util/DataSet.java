@@ -13,6 +13,7 @@ public class DataSet {
     public static Event selectedEvent;
     public static boolean isAdmin;
     public static List<String> wishlist;
+    public static List<Event> events;
 
     public static List<Event> getDummyEvents() {
         List<Event> events = new ArrayList<>();
@@ -67,5 +68,38 @@ public class DataSet {
         }
 
         return wishlist.contains(eventId);
+    }
+
+    public static List<Event> getEvents(String location) {
+        List<Event> list = new ArrayList<>();
+
+        if (events == null || events.isEmpty()) {
+            return list;
+        }
+
+        for (Event event : events) {
+            if (event.getLocation().equals(location)) {
+                list.add(event);
+            }
+        }
+
+        return list;
+    }
+
+    public static List<Event> getEvents(long from, long to) {
+        List<Event> list = new ArrayList<>();
+
+        if (events == null || events.isEmpty()) {
+            return list;
+        }
+
+        for (Event event : events) {
+            if (event.getDate().getTime() >= from &&
+                    event.getDate().getTime() <= to) {
+                list.add(event);
+            }
+        }
+
+        return list;
     }
 }

@@ -74,7 +74,8 @@ public class AllFragment extends Fragment implements OnRvItemClickListener<Event
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
-                adapter.setDataSet(FirebaseUtil.parseEventList(dataSnapshot));
+                DataSet.events = FirebaseUtil.parseEventList(dataSnapshot);
+                adapter.setDataSet(DataSet.events);
             }
 
             @Override
