@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.school.eventrra.R;
+import com.school.eventrra.util.DataSet;
+import com.school.eventrra.util.UiUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +34,8 @@ public class SignInActivity extends AppCompatActivity {
     private static final List<String> permissions = Arrays.asList(
             Manifest.permission.INTERNET
     );
+
+    private FirebaseAuth mAuth;
 
     private TextInputEditText edtEmail, edtPassword;
     private ProgressDialog progressDialog;
@@ -47,6 +57,8 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         requestPermissionsIfNecessary();
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -98,9 +110,37 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signIn(View v) {
-        // TODO: 4/16/2020 call api
+        final String email = UiUtil.getString(edtEmail);
+        final String password = UiUtil.getString(edtPassword);
 
-        goToBottomNavigationActivity();
+        if (TextUtils.isEmpty(email)) {
+            edtEmail.requestFocus();
+            edtEmail.setError("Enter email");
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            edtPassword.requestFocus();
+            edtPassword.setError("Enter password");
+            return;
+        }
+
+        DataSet.isAdmin = email.equals("admin@gmail.com");
+
+        progressDialog.show();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            goToBottomNavigationActivity();
+                        } else {
+                            Toast.makeText(SignInActivity.this, "Sign in failed!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     public void signUp(View v) {

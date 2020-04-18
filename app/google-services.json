@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "979552172353",
+    "firebase_url": "https://eventrra-52150.firebaseio.com",
+    "project_id": "eventrra-52150",
+    "storage_bucket": "eventrra-52150.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979552172353:android:2dcabf322258ffb14c09c0",
+        "android_client_info": {
+          "package_name": "com.school.eventrra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979552172353-0qt82jro65nsf4ht1u6a9e6217hskkk6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRo0cGxgpZlXNeT1mwKEVTJihmn75ZD9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979552172353-0qt82jro65nsf4ht1u6a9e6217hskkk6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

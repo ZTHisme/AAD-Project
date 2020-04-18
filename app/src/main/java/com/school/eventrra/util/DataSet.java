@@ -11,6 +11,7 @@ import java.util.Locale;
 
 public class DataSet {
     public static Event selectedEvent;
+    public static boolean isAdmin;
 
     public static List<Event> getDummyEvents() {
         List<Event> events = new ArrayList<>();
