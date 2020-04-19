@@ -11,6 +11,8 @@ public class Event implements Serializable {
     private String title;
     private String imageBase64;
     private String location;
+    private double latitude;
+    private double longitude;
     private String about;
     private String price;
 
@@ -68,6 +70,22 @@ public class Event implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getAbout() {

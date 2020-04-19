@@ -20,9 +20,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +43,8 @@ import java.util.Date;
 import java.util.List;
 
 public class EventEditorActivity extends AppCompatActivity {
+    public static final int REQUEST_CODE = 1;
+
     private List<String> countries;
 
     private DatabaseReference myRef;
@@ -50,6 +54,7 @@ public class EventEditorActivity extends AppCompatActivity {
     private Button btnDate, btnFrom, btnTo;
     private Spinner spnLocation;
     private ProgressDialog progressDialog;
+    private TextView tvLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,21 @@ public class EventEditorActivity extends AppCompatActivity {
                     imageView.setImageBitmap(bm);
                     break;
                 }
+                case REQUEST_CODE: {
+                    if (data.getExtras() == null) {
+                        showFailToGetLocationToast();
+                        return;
+                    }
+                    LatLng latLng = (LatLng) data.getExtras().get(MapsActivity.RESULT_LAT_LNG);
+                    if (latLng == null) {
+                        showFailToGetLocationToast();
+                        return;
+                    }
+                    checkLocationPicker();
+                    DataSet.selectedEvent.setLatitude(latLng.latitude);
+                    DataSet.selectedEvent.setLongitude(latLng.longitude);
+                    break;
+                }
             }
         }
     }
@@ -123,6 +143,7 @@ public class EventEditorActivity extends AppCompatActivity {
         btnFrom = findViewById(R.id.btn_from);
         btnTo = findViewById(R.id.btn_to);
         spnLocation = findViewById(R.id.spn_location);
+        tvLocation = findViewById(R.id.location);
         edtAbout = findViewById(R.id.edt_about);
         edtPrice = findViewById(R.id.edt_price);
 
@@ -156,8 +177,15 @@ public class EventEditorActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                DataSet.selectedEvent.setFromDate(
-                                        new Date(0, 0, 0, hourOfDay, minute, 0));
+                                Date date = new Date(0, 0, 0, hourOfDay, minute, 0);
+
+                                if (DataSet.selectedEvent.getToDate() != null &&
+                                        DataSet.selectedEvent.getToDate().getTime() <= date.getTime()) {
+                                    showInvalidToast();
+                                    return;
+                                }
+
+                                DataSet.selectedEvent.setFromDate(date);
 
                                 btnFrom.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()));
                             }
@@ -172,8 +200,15 @@ public class EventEditorActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                DataSet.selectedEvent.setToDate(
-                                        new Date(0, 0, 0, hourOfDay, minute, 0));
+                                Date date = new Date(0, 0, 0, hourOfDay, minute, 0);
+
+                                if (DataSet.selectedEvent.getFromDate() != null &&
+                                        DataSet.selectedEvent.getFromDate().getTime() >= date.getTime()) {
+                                    showInvalidToast();
+                                    return;
+                                }
+
+                                DataSet.selectedEvent.setToDate(date);
 
                                 btnTo.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));
                             }
@@ -186,6 +221,17 @@ public class EventEditorActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 countries);
         spnLocation.setAdapter(adapter);
+
+        tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EventEditorActivity.this, MapsActivity.class);
+                i.putExtra(MapsActivity.PARAM_LAT, DataSet.selectedEvent.getLatitude());
+                i.putExtra(MapsActivity.PARAM_LNG, DataSet.selectedEvent.getLongitude());
+                i.putExtra(MapsActivity.PARAM_SET_LONG_CLICK_LISTENER, true);
+                startActivityForResult(i, REQUEST_CODE);
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
@@ -313,5 +359,25 @@ public class EventEditorActivity extends AppCompatActivity {
         spnLocation.setSelection(countries.indexOf(DataSet.selectedEvent.getLocation()));
         edtAbout.setText(DataSet.selectedEvent.getAbout());
         edtPrice.setText(DataSet.selectedEvent.getPrice());
+
+        if (DataSet.selectedEvent.getLatitude() != 0 ||
+                DataSet.selectedEvent.getLongitude() != 0) {
+            checkLocationPicker();
+        }
+    }
+
+    private void checkLocationPicker() {
+        tvLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_yellow_24dp,
+                0,
+                R.drawable.ic_check_green_24dp,
+                0);
+    }
+
+    private void showFailToGetLocationToast() {
+        Toast.makeText(this, "Fail to get location!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showInvalidToast() {
+        Toast.makeText(this, "Invalid!", Toast.LENGTH_SHORT).show();
     }
 }

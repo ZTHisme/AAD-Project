@@ -5,7 +5,6 @@ import com.school.eventrra.model.Register;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,20 +14,6 @@ public class DataSet {
     public static List<String> wishlist;
     public static List<Event> events;
     public static Register selectedRegister;
-
-    public static List<Register> getDummyRegisters() {
-        List<Register> registers = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            Register register = new Register();
-            register.setDate(new Date());
-            register.setUsername("Username " + i);
-            register.setEventTitle("Event Title " + i);
-            registers.add(register);
-        }
-
-        return registers;
-    }
 
     public static List<String> getCountries() {
         Locale[] locales = Locale.getAvailableLocales();

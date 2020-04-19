@@ -36,6 +36,13 @@ public class EventActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
 
+    private final View.OnClickListener goToMapActivityClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goToMapActivity();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +61,9 @@ public class EventActivity extends AppCompatActivity {
 
         ImageView img = findViewById(R.id.img_view);
         img.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 4/19/2020 pass param
-                startActivity(new Intent(EventActivity.this, MapsActivity.class));
-            }
-        });
+        img.setOnClickListener(goToMapActivityClickListener);
+
+        findViewById(R.id.cl_location).setOnClickListener(goToMapActivityClickListener);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,5 +157,13 @@ public class EventActivity extends AppCompatActivity {
 
     private void showFailToAddToast() {
         Toast.makeText(EventActivity.this, "Fail to add wishlist", Toast.LENGTH_SHORT).show();
+    }
+
+    private void goToMapActivity() {
+        Intent i = new Intent(EventActivity.this, MapsActivity.class);
+        i.putExtra(MapsActivity.PARAM_LAT, DataSet.selectedEvent.getLatitude());
+        i.putExtra(MapsActivity.PARAM_LNG, DataSet.selectedEvent.getLongitude());
+        i.putExtra(MapsActivity.PARAM_TITLE, DataSet.selectedEvent.getTitle());
+        startActivity(i);
     }
 }
