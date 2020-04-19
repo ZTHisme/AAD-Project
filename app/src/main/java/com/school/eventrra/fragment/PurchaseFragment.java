@@ -4,9 +4,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +59,30 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
 
         myRef = FirebaseDatabase.getInstance().getReference(Constants.TABLE_REGISTER);
 
+        EditText edtSearch = root.findViewById(R.id.edt_search);
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
+            }
+        });
+
+        final ImageView imgSort = root.findViewById(R.id.img_sort);
+        imgSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean ascending = adapter.triggerDateSort();
+                imgSort.setRotation(ascending ? 180 : 0);
+            }
+        });
 
         fetchData();
 
