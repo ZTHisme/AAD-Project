@@ -54,6 +54,13 @@ public class EventActivity extends AppCompatActivity {
 
         ImageView img = findViewById(R.id.img_view);
         img.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 4/19/2020 pass param
+                startActivity(new Intent(EventActivity.this, MapsActivity.class));
+            }
+        });
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
