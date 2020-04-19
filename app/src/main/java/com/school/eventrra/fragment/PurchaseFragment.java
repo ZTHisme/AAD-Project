@@ -39,6 +39,16 @@ import com.school.eventrra.util.FirebaseUtil;
 
 public class PurchaseFragment extends Fragment implements OnRvItemClickListener<Register> {
     private DatabaseReference myRef;
+    private ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            adapter.setDataSet(FirebaseUtil.parsePurchaseList(dataSnapshot));
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
 
     private RegisterRvAdapter adapter;
     private ProgressDialog progressDialog;
@@ -117,18 +127,13 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
             return;
         }
 
-        myRef.orderByChild("email")
-                .equalTo(currentUser.getEmail())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        adapter.setDataSet(FirebaseUtil.parsePurchaseList(dataSnapshot));
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+        if (DataSet.isAdmin) {
+            myRef.addValueEventListener(valueEventListener);
+        } else {
+            myRef.orderByChild("email")
+                    .equalTo(currentUser.getEmail())
+                    .addValueEventListener(valueEventListener);
+        }
     }
 
     private void deleteRegister(final Register register) {

@@ -73,6 +73,10 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        if (DataSet.isAdmin) {
+            findViewById(R.id.btn_register).setVisibility(View.GONE);
+        }
+
         isFavorite = DataSet.isWishlist(DataSet.selectedEvent.getId());
         triggerFavIcon();
 

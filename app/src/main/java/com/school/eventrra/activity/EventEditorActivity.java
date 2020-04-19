@@ -178,15 +178,7 @@ public class EventEditorActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 Date date = new Date(0, 0, 0, hourOfDay, minute, 0);
-
-                                if (DataSet.selectedEvent.getToDate() != null &&
-                                        DataSet.selectedEvent.getToDate().getTime() <= date.getTime()) {
-                                    showInvalidToast();
-                                    return;
-                                }
-
                                 DataSet.selectedEvent.setFromDate(date);
-
                                 btnFrom.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()));
                             }
                         });
@@ -201,15 +193,7 @@ public class EventEditorActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 Date date = new Date(0, 0, 0, hourOfDay, minute, 0);
-
-                                if (DataSet.selectedEvent.getFromDate() != null &&
-                                        DataSet.selectedEvent.getFromDate().getTime() >= date.getTime()) {
-                                    showInvalidToast();
-                                    return;
-                                }
-
                                 DataSet.selectedEvent.setToDate(date);
-
                                 btnTo.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));
                             }
                         });
@@ -375,9 +359,5 @@ public class EventEditorActivity extends AppCompatActivity {
 
     private void showFailToGetLocationToast() {
         Toast.makeText(this, "Fail to get location!", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showInvalidToast() {
-        Toast.makeText(this, "Invalid!", Toast.LENGTH_SHORT).show();
     }
 }
