@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,19 +20,24 @@ import com.school.eventrra.model.Event;
 import com.school.eventrra.util.DataSet;
 
 public class WishListFragment extends Fragment implements OnRvItemClickListener<Event> {
+    private EventRvAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         RecyclerView rv = root.findViewById(R.id.rv);
-        EventRvAdapter adapter = new EventRvAdapter(getContext(), this);
-        // TODO: 4/16/2020 get data from api and set to adapter
-        adapter.setDataSet(DataSet.getDummyEvents());
+        adapter = new EventRvAdapter(getContext(), this);
         rv.setAdapter(adapter);
         if (getContext() != null) {
             rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         }
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        filterEvents();
     }
 
     @Override
@@ -42,6 +48,13 @@ public class WishListFragment extends Fragment implements OnRvItemClickListener<
 
     @Override
     public void onLongClick(int position, Event event) {
-        // nothing to do
+        if (DataSet.isAdmin) {
+            // TODO: 4/16/2020 show edit or delete option
+            Toast.makeText(getContext(), "onLongClick: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void filterEvents() {
+        adapter.setDataSet(DataSet.getWishlistEvents());
     }
 }

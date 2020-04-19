@@ -15,24 +15,6 @@ public class DataSet {
     public static List<String> wishlist;
     public static List<Event> events;
 
-    public static List<Event> getDummyEvents() {
-        List<Event> events = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            Event event = new Event();
-            event.setDate(new Date());
-            event.setFromDate(new Date());
-            event.setToDate(new Date());
-            event.setTitle("Title " + i);
-            event.setLocation("Location " + i);
-            event.setAbout("About About About About About About About About About About About " + i);
-            event.setPrice("Price " + i);
-            events.add(event);
-        }
-
-        return events;
-    }
-
     public static List<Register> getDummyRegisters() {
         List<Register> registers = new ArrayList<>();
 
@@ -96,6 +78,22 @@ public class DataSet {
         for (Event event : events) {
             if (event.getDate().getTime() >= from &&
                     event.getDate().getTime() <= to) {
+                list.add(event);
+            }
+        }
+
+        return list;
+    }
+
+    public static List<Event> getWishlistEvents() {
+        List<Event> list = new ArrayList<>();
+
+        if (wishlist == null || wishlist.isEmpty() || events == null || events.isEmpty()) {
+            return list;
+        }
+
+        for (Event event : events) {
+            if (wishlist.contains(event.getId())) {
                 list.add(event);
             }
         }
