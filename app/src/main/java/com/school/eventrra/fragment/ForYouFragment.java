@@ -9,9 +9,16 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import com.school.eventrra.util.DataSet;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.school.eventrra.model.Event;
+import com.school.eventrra.util.Constants;
+import com.school.eventrra.util.FirebaseUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +30,11 @@ public class ForYouFragment extends BaseSubHomeFragment {
         filterEvents();
     }
 
+    @Override
+    List<Event> filterData() {
+        return null;
+    }
+
     private void filterEvents() {
         String currentLocation = getCurrentLocation();
         if (currentLocation == null) {
@@ -30,7 +42,20 @@ public class ForYouFragment extends BaseSubHomeFragment {
             return;
         }
 
-        adapter.setDataSet(DataSet.getEvents(currentLocation));
+        FirebaseDatabase.getInstance()
+                .getReference(Constants.TABLE_EVENT)
+                .orderByChild("location")
+                .equalTo(currentLocation)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        adapter.setDataSet(FirebaseUtil.parseEventList(dataSnapshot));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
     }
 
     private String getCurrentLocation() {

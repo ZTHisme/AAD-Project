@@ -38,22 +38,6 @@ public class DataSet {
         return wishlist.contains(eventId);
     }
 
-    public static List<Event> getEvents(String location) {
-        List<Event> list = new ArrayList<>();
-
-        if (events == null || events.isEmpty()) {
-            return list;
-        }
-
-        for (Event event : events) {
-            if (event.getLocation().equals(location)) {
-                list.add(event);
-            }
-        }
-
-        return list;
-    }
-
     public static List<Event> getEvents(long from, long to) {
         List<Event> list = new ArrayList<>();
 

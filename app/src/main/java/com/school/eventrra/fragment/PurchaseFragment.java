@@ -117,19 +117,16 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
             return;
         }
 
-        progressDialog.show();
         myRef.orderByChild("email")
                 .equalTo(currentUser.getEmail())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        progressDialog.dismiss();
                         adapter.setDataSet(FirebaseUtil.parsePurchaseList(dataSnapshot));
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        progressDialog.dismiss();
                     }
                 });
     }

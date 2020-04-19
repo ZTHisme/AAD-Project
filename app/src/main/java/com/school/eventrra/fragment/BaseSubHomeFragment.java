@@ -20,7 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.school.eventrra.R;
 import com.school.eventrra.activity.EventActivity;
 import com.school.eventrra.activity.EventEditorActivity;
@@ -30,6 +33,9 @@ import com.school.eventrra.model.Event;
 import com.school.eventrra.util.Constants;
 import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DialogUtil;
+import com.school.eventrra.util.FirebaseUtil;
+
+import java.util.List;
 
 public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemClickListener<Event> {
     ProgressDialog progressDialog;
@@ -139,5 +145,23 @@ public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemCl
                 });
     }
 
+    void fetchEvent() {
+        FirebaseDatabase.getInstance()
+                .getReference(Constants.TABLE_EVENT)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        DataSet.events = FirebaseUtil.parseEventList(dataSnapshot);
+                        adapter.setDataSet(filterData());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
     abstract void fetchData();
+
+    abstract List<Event> filterData();
 }
