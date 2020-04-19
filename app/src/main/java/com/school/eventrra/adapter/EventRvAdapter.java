@@ -77,10 +77,14 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
     public void onBindViewHolder(@NonNull EventRvAdapter.ViewHolder holder, int position) {
         final Event event = filteredDataSet.get(holder.getAdapterPosition());
         holder.img.setImageBitmap(BitmapUtil.base64StringToBitmap(event.getImageBase64()));
-        holder.imgFav.setImageDrawable(context.getResources().getDrawable(
-                DataSet.isWishlist(event.getId())
-                        ? R.drawable.ic_favorite_black_24dp
-                        : R.drawable.ic_favorite_border_black_24dp));
+        if (DataSet.isAdmin) {
+            holder.imgFav.setVisibility(View.GONE);
+        } else {
+            holder.imgFav.setImageDrawable(context.getResources().getDrawable(
+                    DataSet.isWishlist(event.getId())
+                            ? R.drawable.ic_favorite_black_24dp
+                            : R.drawable.ic_favorite_border_black_24dp));
+        }
         holder.tvDatetime.setText(DateUtil.stdDateFormat(event.getDate()));
         holder.tvTitle.setText(event.getTitle());
         holder.tvLocation.setText(event.getLocation());

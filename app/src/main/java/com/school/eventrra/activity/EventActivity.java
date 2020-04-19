@@ -66,12 +66,16 @@ public class EventActivity extends AppCompatActivity {
         findViewById(R.id.cl_location).setOnClickListener(goToMapActivityClickListener);
 
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                triggerFav();
-            }
-        });
+        if (DataSet.isAdmin) {
+            fab.setVisibility(View.GONE);
+        } else {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    triggerFav();
+                }
+            });
+        }
 
         if (DataSet.isAdmin) {
             findViewById(R.id.btn_register).setVisibility(View.GONE);

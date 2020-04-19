@@ -349,6 +349,7 @@ public class EventEditorActivity extends AppCompatActivity {
         btnFrom.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()));
         btnTo.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));
         spnLocation.setSelection(countries.indexOf(DataSet.selectedEvent.getLocation()));
+        edtPlace.setText(DataSet.selectedEvent.getPlace());
         edtAbout.setText(DataSet.selectedEvent.getAbout());
         edtPrice.setText(DataSet.selectedEvent.getPrice());
 
