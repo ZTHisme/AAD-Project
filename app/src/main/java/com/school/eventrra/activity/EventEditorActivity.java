@@ -50,7 +50,7 @@ public class EventEditorActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private ImageView imageView;
-    private EditText edtTitle, edtAbout, edtPrice;
+    private EditText edtTitle, edtPlace, edtAbout, edtPrice;
     private Button btnDate, btnFrom, btnTo;
     private Spinner spnLocation;
     private ProgressDialog progressDialog;
@@ -144,6 +144,7 @@ public class EventEditorActivity extends AppCompatActivity {
         btnTo = findViewById(R.id.btn_to);
         spnLocation = findViewById(R.id.spn_location);
         tvLocation = findViewById(R.id.location);
+        edtPlace = findViewById(R.id.edt_place);
         edtAbout = findViewById(R.id.edt_about);
         edtPrice = findViewById(R.id.edt_price);
 
@@ -263,6 +264,7 @@ public class EventEditorActivity extends AppCompatActivity {
     private void save() {
         String title = edtTitle.getText().toString().trim();
         String location = (String) spnLocation.getSelectedItem();
+        String place = edtPlace.getText().toString().trim();
         String about = edtAbout.getText().toString().trim();
         String price = edtPrice.getText().toString().trim();
 
@@ -273,6 +275,11 @@ public class EventEditorActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(title)) {
             edtTitle.setError("Enter title");
+            return;
+        }
+
+        if (TextUtils.isEmpty(place)) {
+            edtPlace.setError("Enter place");
             return;
         }
 
@@ -311,6 +318,7 @@ public class EventEditorActivity extends AppCompatActivity {
         }
         DataSet.selectedEvent.setTitle(title);
         DataSet.selectedEvent.setLocation(location);
+        DataSet.selectedEvent.setPlace(place);
         DataSet.selectedEvent.setAbout(about);
         DataSet.selectedEvent.setPrice(price);
 

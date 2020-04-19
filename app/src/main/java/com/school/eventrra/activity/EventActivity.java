@@ -85,6 +85,7 @@ public class EventActivity extends AppCompatActivity {
                 DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()) + " - " +
                         DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));
         setText(R.id.tv_location_value, String.valueOf(DataSet.selectedEvent.getLocation()));
+        setText(R.id.tv_place_value, String.valueOf(DataSet.selectedEvent.getPlace()));
         setText(R.id.tv_about_value, String.valueOf(DataSet.selectedEvent.getAbout()));
         setText(R.id.tv_price_value, String.valueOf(DataSet.selectedEvent.getPrice()));
     }

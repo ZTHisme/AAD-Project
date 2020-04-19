@@ -13,6 +13,7 @@ public class Event implements Serializable {
     private String location;
     private double latitude;
     private double longitude;
+    private String place;
     private String about;
     private String price;
 
@@ -86,6 +87,14 @@ public class Event implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getAbout() {

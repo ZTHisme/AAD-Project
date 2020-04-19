@@ -43,4 +43,5 @@
     <string name="search">Search</string>
     <string name="title_activity_maps">Map</string>
     <string name="add_location_map">Add location map</string>
+    <string name="place">Place</string>
 </resources>
