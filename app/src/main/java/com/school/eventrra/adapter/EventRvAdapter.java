@@ -20,6 +20,8 @@ import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHolder>
@@ -28,6 +30,7 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
     private List<Event> dataSet;
     private List<Event> filteredDataSet;
     private OnRvItemClickListener<Event> onRvItemClickListener;
+    private boolean ascending;
 
     public EventRvAdapter(Context context, OnRvItemClickListener<Event> onRvItemClickListener) {
         this.context = context;
@@ -43,6 +46,23 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
     public void removeItem(Event event) {
         this.dataSet.remove(event);
         notifyDataSetChanged();
+    }
+
+    public boolean triggerCountrySort() {
+        ascending = !ascending;
+
+        Collections.sort(this.filteredDataSet, new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                return ascending
+                        ? o1.getLocation().compareTo(o2.getLocation())
+                        : o2.getLocation().compareTo(o1.getLocation());
+            }
+        });
+
+        notifyDataSetChanged();
+
+        return ascending;
     }
 
     @NonNull
