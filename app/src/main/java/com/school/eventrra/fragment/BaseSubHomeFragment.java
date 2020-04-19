@@ -20,15 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.school.eventrra.R;
 import com.school.eventrra.activity.EventActivity;
 import com.school.eventrra.activity.EventEditorActivity;
 import com.school.eventrra.adapter.EventRvAdapter;
-import com.school.eventrra.callback.OnRvItemClickListener;
+import com.school.eventrra.callback.EventRvItemClickListener;
 import com.school.eventrra.model.Event;
 import com.school.eventrra.util.Constants;
 import com.school.eventrra.util.DataSet;
@@ -37,8 +40,11 @@ import com.school.eventrra.util.FirebaseUtil;
 
 import java.util.List;
 
-public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemClickListener<Event> {
-    ProgressDialog progressDialog;
+public abstract class BaseSubHomeFragment extends Fragment implements EventRvItemClickListener {
+    private FirebaseUser currentUser;
+    private DatabaseReference myRef;
+
+    private ProgressDialog progressDialog;
     EventRvAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,6 +87,10 @@ public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemCl
             }
         });
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        myRef = FirebaseDatabase.getInstance().getReference(Constants.TABLE_WISHLIST);
+
         return root;
     }
 
@@ -116,6 +126,44 @@ public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemCl
                                             deleteEvent(event);
                                         }
                                     });
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onFavClick(final int position, final Event event) {
+        if (currentUser == null) {
+            showFailToAddToast();
+            return;
+        }
+
+        if (DataSet.isWishlist(event.getId())) {
+            myRef.child(currentUser.getUid())
+                    .child(event.getId())
+                    .removeValue()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                DataSet.wishlist.remove(event.getId());
+                                adapter.notifyDataSetChanged();
+                                afterFavStatusChange(position, event, false);
+                            }
+                        }
+                    });
+        } else {
+            myRef.child(currentUser.getUid())
+                    .child(event.getId())
+                    .setValue(event.getId())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                DataSet.wishlist.add(event.getId());
+                                adapter.notifyDataSetChanged();
+                                afterFavStatusChange(position, event, true);
+                            }
                         }
                     });
         }
@@ -161,7 +209,13 @@ public abstract class BaseSubHomeFragment extends Fragment implements OnRvItemCl
                 });
     }
 
+    private void showFailToAddToast() {
+        Toast.makeText(getContext(), "Fail to add wishlist", Toast.LENGTH_SHORT).show();
+    }
+
     abstract void fetchData();
 
     abstract List<Event> filterData();
+
+    abstract void afterFavStatusChange(int position, Event event, boolean isFavorite);
 }

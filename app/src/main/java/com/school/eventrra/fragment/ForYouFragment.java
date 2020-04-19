@@ -35,6 +35,10 @@ public class ForYouFragment extends BaseSubHomeFragment {
         return null;
     }
 
+    @Override
+    void afterFavStatusChange(int position, Event event, boolean isFavorite) {
+    }
+
     private void filterEvents() {
         String currentLocation = getCurrentLocation();
         if (currentLocation == null) {

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.school.eventrra.R;
-import com.school.eventrra.callback.OnRvItemClickListener;
+import com.school.eventrra.callback.EventRvItemClickListener;
 import com.school.eventrra.model.Event;
 import com.school.eventrra.util.BitmapUtil;
 import com.school.eventrra.util.DataSet;
@@ -29,10 +29,10 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
     private Context context;
     private List<Event> dataSet;
     private List<Event> filteredDataSet;
-    private OnRvItemClickListener<Event> onRvItemClickListener;
+    private EventRvItemClickListener onRvItemClickListener;
     private boolean ascending;
 
-    public EventRvAdapter(Context context, OnRvItemClickListener<Event> onRvItemClickListener) {
+    public EventRvAdapter(Context context, EventRvItemClickListener onRvItemClickListener) {
         this.context = context;
         this.onRvItemClickListener = onRvItemClickListener;
     }
@@ -155,6 +155,14 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
                     int position = getAdapterPosition();
                     onRvItemClickListener.onLongClick(position, filteredDataSet.get(position));
                     return true;
+                }
+            });
+
+            imgFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    onRvItemClickListener.onFavClick(position, filteredDataSet.get(position));
                 }
             });
         }

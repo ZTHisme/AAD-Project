@@ -16,4 +16,11 @@ public class WishListFragment extends BaseSubHomeFragment {
     List<Event> filterData() {
         return DataSet.getWishlistEvents();
     }
+
+    @Override
+    void afterFavStatusChange(int position, Event event, boolean isFavorite) {
+        if (!isFavorite) {
+            adapter.removeItem(event);
+        }
+    }
 }

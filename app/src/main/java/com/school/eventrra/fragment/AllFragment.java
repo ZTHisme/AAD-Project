@@ -30,6 +30,10 @@ public class AllFragment extends BaseSubHomeFragment {
         return DataSet.events;
     }
 
+    @Override
+    void afterFavStatusChange(int position, Event event, boolean isFavorite) {
+    }
+
     private void fetchWishlistAndEvents() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();

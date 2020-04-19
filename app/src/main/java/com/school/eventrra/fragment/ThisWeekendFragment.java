@@ -18,4 +18,8 @@ public class ThisWeekendFragment extends BaseSubHomeFragment {
         return DataSet.getEvents(DateUtil.getFirstDayOfCurrentWeek(),
                 DateUtil.getFirstDayOfNextWeek());
     }
+
+    @Override
+    void afterFavStatusChange(int position, Event event, boolean isFavorite) {
+    }
 }
