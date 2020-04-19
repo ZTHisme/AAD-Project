@@ -49,6 +49,11 @@ public class RegisterRvAdapter extends RecyclerView.Adapter<RegisterRvAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public void removeItem(Register register) {
+        this.dataSet.remove(register);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvDate, tvUsername, tvEventTitle;
 
@@ -64,6 +69,15 @@ public class RegisterRvAdapter extends RecyclerView.Adapter<RegisterRvAdapter.Vi
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     onRvItemClickListener.onClick(position, dataSet.get(position));
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    onRvItemClickListener.onLongClick(position, dataSet.get(position));
+                    return true;
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.school.eventrra.fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.school.eventrra.R;
@@ -26,10 +30,14 @@ import com.school.eventrra.callback.OnRvItemClickListener;
 import com.school.eventrra.model.Register;
 import com.school.eventrra.util.Constants;
 import com.school.eventrra.util.DataSet;
+import com.school.eventrra.util.DialogUtil;
 import com.school.eventrra.util.FirebaseUtil;
 
 public class PurchaseFragment extends Fragment implements OnRvItemClickListener<Register> {
+    private DatabaseReference myRef;
+
     private RegisterRvAdapter adapter;
+    private ProgressDialog progressDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +48,13 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
         if (getContext() != null) {
             rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         }
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Processing...");
+        progressDialog.setCancelable(false);
+
+        myRef = FirebaseDatabase.getInstance().getReference(Constants.TABLE_REGISTER);
+
 
         fetchData();
 
@@ -53,10 +68,16 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
     }
 
     @Override
-    public void onLongClick(int position, Register register) {
+    public void onLongClick(int position, final Register register) {
         if (DataSet.isAdmin) {
-            // TODO: 4/16/2020 show edit or delete option
-            Toast.makeText(getContext(), "onLongClick: " + register.getEventTitle(), Toast.LENGTH_SHORT).show();
+            DialogUtil.showDeleteConfirmDialog(getContext(),
+                    register.getEventTitle(),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteRegister(register);
+                        }
+                    });
         }
     }
 
@@ -68,14 +89,8 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
             return;
         }
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Processing...");
-        progressDialog.setCancelable(false);
         progressDialog.show();
-
-        FirebaseDatabase.getInstance()
-                .getReference(Constants.TABLE_REGISTER)
-                .orderByChild("email")
+        myRef.orderByChild("email")
                 .equalTo(currentUser.getEmail())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -87,6 +102,23 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         progressDialog.dismiss();
+                    }
+                });
+    }
+
+    private void deleteRegister(final Register register) {
+        progressDialog.show();
+        myRef.child(register.getId())
+                .removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            adapter.removeItem(register);
+                        } else {
+                            Toast.makeText(getContext(), "fail to delete!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
