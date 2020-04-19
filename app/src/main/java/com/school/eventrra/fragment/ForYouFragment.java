@@ -26,6 +26,15 @@ import java.util.List;
 public class ForYouFragment extends BaseSubHomeFragment {
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            onResume();
+        }
+    }
+
+    @Override
     void fetchData() {
         filterEvents();
     }
