@@ -8,6 +8,7 @@ public class Register implements Serializable {
     private Date date;
     private String eventId;
     private String eventTitle;
+    private int noOfTicket;
     private String price;
     private String username;
     private String phone;
@@ -44,6 +45,14 @@ public class Register implements Serializable {
 
     public void setEventTitle(String eventTitle) {
         this.eventTitle = eventTitle;
+    }
+
+    public int getNoOfTicket() {
+        return noOfTicket;
+    }
+
+    public void setNoOfTicket(int noOfTicket) {
+        this.noOfTicket = noOfTicket;
     }
 
     public String getPrice() {

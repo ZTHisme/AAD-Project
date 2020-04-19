@@ -1,5 +1,6 @@
 package com.school.eventrra.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,13 +9,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import com.school.eventrra.R;
 import com.school.eventrra.util.BitmapUtil;
 import com.school.eventrra.util.DataSet;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 444;
+
+    private NumberPicker np;
+    public static int noOfTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +35,25 @@ public class RegisterActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.img_view);
         img.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
 
-        NumberPicker np = findViewById(R.id.np);
+        np = findViewById(R.id.np);
         np.setMinValue(1);
         np.setMaxValue(100);
-        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Toast.makeText(RegisterActivity.this,
-                        newVal + " Tickets",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        noOfTicket = 0;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     public void next(View v) {
-        startActivity(new Intent(this, BookingActivity.class));
+        noOfTicket = np.getValue();
+        startActivityForResult(new Intent(this, BookingActivity.class), REQUEST_CODE);
     }
 }

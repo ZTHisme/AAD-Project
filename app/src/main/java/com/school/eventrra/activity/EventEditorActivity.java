@@ -108,6 +108,12 @@ public class EventEditorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataSet.selectedEvent = null;
+    }
+
     private void initUI() {
         imageView = findViewById(R.id.img_view);
         edtTitle = findViewById(R.id.edt_title);
@@ -286,7 +292,6 @@ public class EventEditorActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
-                            DataSet.selectedEvent = null;
                             finish();
                         } else {
                             showFailToSaveToast();

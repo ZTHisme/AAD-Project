@@ -43,7 +43,16 @@
         <TextView
             style="@style/InvoiceTitleTextTheme"
             android:layout_marginTop="16dp"
-            android:text="@string/price" />
+            android:text="@string/number_of_ticket" />
+
+        <TextView
+            android:id="@+id/tv_no_of_ticket"
+            style="@style/InvoiceValueTextTheme" />
+
+        <TextView
+            style="@style/InvoiceTitleTextTheme"
+            android:layout_marginTop="16dp"
+            android:text="@string/price_for_one_ticket" />
 
         <TextView
             android:id="@+id/tv_price"
@@ -87,6 +96,15 @@
         <TextView
             android:id="@+id/tv_address"
             style="@style/InvoiceValueTextTheme" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_btn_bg"
+            android:onClick="done"
+            android:text="@string/done"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

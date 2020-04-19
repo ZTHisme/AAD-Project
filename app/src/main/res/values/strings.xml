@@ -35,4 +35,6 @@
     <string name="invoice_id">Invoice ID</string>
     <string name="date">Date</string>
     <string name="invoice_details">Invoice Details</string>
+    <string name="done">Done</string>
+    <string name="price_for_one_ticket">Price(for one ticket)</string>
 </resources>

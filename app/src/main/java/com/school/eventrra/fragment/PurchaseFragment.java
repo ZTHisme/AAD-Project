@@ -19,7 +19,6 @@ import com.school.eventrra.model.Register;
 import com.school.eventrra.util.DataSet;
 
 public class PurchaseFragment extends Fragment implements OnRvItemClickListener<Register> {
-    public static Register selectedRegister;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class PurchaseFragment extends Fragment implements OnRvItemClickListener<
 
     @Override
     public void onClick(int position, Register register) {
-        PurchaseFragment.selectedRegister = register;
+        DataSet.selectedRegister = register;
         startActivity(new Intent(getContext(), PurchasedDetailActivity.class));
     }
 

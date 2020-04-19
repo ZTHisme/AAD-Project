@@ -14,6 +14,7 @@ public class DataSet {
     public static boolean isAdmin;
     public static List<String> wishlist;
     public static List<Event> events;
+    public static Register selectedRegister;
 
     public static List<Register> getDummyRegisters() {
         List<Register> registers = new ArrayList<>();

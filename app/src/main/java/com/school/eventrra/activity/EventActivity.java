@@ -1,6 +1,7 @@
 package com.school.eventrra.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,6 +27,8 @@ import com.school.eventrra.util.DataSet;
 import com.school.eventrra.util.DateUtil;
 
 public class EventActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 333;
+
     private static boolean isFavorite;
 
     private FirebaseUser currentUser;
@@ -72,6 +75,22 @@ public class EventActivity extends AppCompatActivity {
         setText(R.id.tv_price_value, String.valueOf(DataSet.selectedEvent.getPrice()));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            setResult(RESULT_OK);
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataSet.selectedEvent = null;
+    }
+
     private void setText(int tvId, String str) {
         if (str == null || TextUtils.isEmpty(str)) {
             return;
@@ -80,7 +99,7 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        startActivity(new Intent(this, RegisterActivity.class));
+        startActivityForResult(new Intent(this, RegisterActivity.class), REQUEST_CODE);
     }
 
     private void triggerFav() {
