@@ -40,6 +40,11 @@ public class EventRvAdapter extends RecyclerView.Adapter<EventRvAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void removeItem(Event event) {
+        this.dataSet.remove(event);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public EventRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

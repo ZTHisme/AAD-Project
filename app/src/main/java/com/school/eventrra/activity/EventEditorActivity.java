@@ -56,12 +56,8 @@ public class EventEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_editor);
 
-        if (DataSet.selectedEvent == null) {
-            DataSet.selectedEvent = new Event();
-        }
-
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(DataSet.selectedEvent.getTitle());
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         findViewById(R.id.editor).setVisibility(View.VISIBLE);
@@ -72,6 +68,12 @@ public class EventEditorActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference(Constants.TABLE_EVENT);
+
+        if (DataSet.selectedEvent == null) {
+            DataSet.selectedEvent = new Event();
+        } else {
+            fillData();
+        }
     }
 
     @Override
@@ -130,8 +132,6 @@ public class EventEditorActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        imageView.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
-
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,5 +302,16 @@ public class EventEditorActivity extends AppCompatActivity {
 
     private void showFailToSaveToast() {
         Toast.makeText(this, "Fail to save", Toast.LENGTH_SHORT).show();
+    }
+
+    private void fillData() {
+        imageView.setImageBitmap(BitmapUtil.base64StringToBitmap(DataSet.selectedEvent.getImageBase64()));
+        edtTitle.setText(DataSet.selectedEvent.getTitle());
+        btnDate.setText(DateUtil.stdDateFormat(DataSet.selectedEvent.getDate()));
+        btnFrom.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getFromDate()));
+        btnTo.setText(DateUtil.hourMinuteAmPm(DataSet.selectedEvent.getToDate()));
+        spnLocation.setSelection(countries.indexOf(DataSet.selectedEvent.getLocation()));
+        edtAbout.setText(DataSet.selectedEvent.getAbout());
+        edtPrice.setText(DataSet.selectedEvent.getPrice());
     }
 }
