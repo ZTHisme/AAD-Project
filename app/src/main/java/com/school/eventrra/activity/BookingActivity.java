@@ -120,7 +120,7 @@ public class BookingActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(address)) {
             edtAddress.requestFocus();
-            edtAddress.setError("Enter address");
+            edtAddress.setError("Enter full address");
             return;
         }
 
