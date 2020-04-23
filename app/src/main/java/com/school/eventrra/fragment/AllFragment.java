@@ -56,6 +56,9 @@ public class AllFragment extends BaseSubHomeFragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
+                        if (DataSet.isAdmin) {
+                            Toast.makeText(getContext(), "onLongClick: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
