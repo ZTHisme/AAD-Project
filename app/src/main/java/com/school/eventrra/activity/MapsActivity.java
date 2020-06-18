@@ -94,7 +94,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!useCurrentLocation) {
             showLocationOnMap();
         }
-
+        if (googleMap == null) {
+            Toast.makeText(getApplicationContext(),
+                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                    .show();
+        }
         if (setLongClickListener) {
             this.googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
