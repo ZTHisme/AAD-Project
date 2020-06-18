@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
                 Toast.makeText(this,
-                        "Getting current location. Wait a sec!",
+                        "Please Wait a sec! To get the current location.",
                         Toast.LENGTH_SHORT).show();
             } else {
                 location = new LatLng(16.798625, 96.149513);
@@ -94,11 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!useCurrentLocation) {
             showLocationOnMap();
         }
-        if (googleMap == null) {
-            Toast.makeText(getApplicationContext(),
-                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                    .show();
-        }
+
         if (setLongClickListener) {
             this.googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
